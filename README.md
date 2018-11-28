@@ -41,22 +41,22 @@ https://gluonhq.com/products/javafx/<br/>
 You can follow the examples uploaded in the Release tab, but here you can get a glimpse
 about what every line means:<br/>
 
-node.path: absolute path the executables of the node, usually inside the 'src' folder.<br/>
-javafx.sdk.path: <folder_where_you_unzip_javafx>/lib.<br/>
-blockchain.explorer.blockcount.api: URL to some REST service providing the total amount of blocks
+**node.path**: absolute path the executables of the node, usually inside the 'src' folder.<br/>
+**javafx.sdk.path**: <folder_where_you_unzip_javafx>/lib.<br/>
+**blockchain.explorer.blockcount.api**: URL to some REST service providing the total amount of blocks
 for the crypto coin.<br/>
-time.zone: to use the same time that the blockchain uses to watch the transactions.<br/>
-coin.code: the code of the cryptocoin. ZEC for ZCash, LTC for Litecoin, etc.<br/>
-start.command: executable file inside node.path to start the node.<br/>
-cli.command: executable file inside node.path to query to the blockchain.<br/>
-system.command: system interpreter. 'sh' on linux distros, 'cmd.exe' in Windows.<br/>
-system.command.parameter: parameter going with the system interpreter. '-c' in linux distros,
+**time.zone**: to use the same time that the blockchain uses to watch the transactions.<br/>
+**coin.code**: the code of the cryptocoin. ZEC for ZCash, LTC for Litecoin, etc.<br/>
+**start.command**: executable file inside node.path to start the node.<br/>
+**cli.command**: executable file inside node.path to query to the blockchain.<br/>
+**system.command**: system interpreter. 'sh' on linux distros, 'cmd.exe' in Windows.<br/>
+**system.command.parameter**: parameter going with the system interpreter. '-c' in linux distros,
 '/k' in Windows.<br/>
-encode: to get a proper string configuration according to the desired foreign language.<br/>
-foreign.language: the default language is English. If you want to replace the second language, let's 
+**encode**: to get a proper string configuration according to the desired foreign language.<br/>
+**foreign.language**: the default language is English. If you want to replace the second language, let's 
 say to German, then you should put 'German' here.<br/>
-two.kind.of.addresses: true if there are Z and T addresses; false, otherwise.<br/>
-donate.address: if you are moving to another crypto coin, let's say X Coin, and you want to put one of 
+**two.kind.of.addresses**: true if there are Z and T addresses; false, otherwise.<br/>
+**donate.address**: if you are moving to another crypto coin, let's say X Coin, and you want to put one of 
 my X Coin addresses here.<br/>
 
 
@@ -160,26 +160,26 @@ Donate
 
 ### Buy me a building, an helicopter, a yacht, etc.
 
-BTC: t1NmxPMWY8EPELxAKRnHi9NGW9NWNypzLzo<br/>
-ETH: 0xe897cF267CE2bad3C571940F5a1176Ddcf0819f7<br/>
-Any token based on ETH like OMG, USDT, TUSD, BTM, PAY, etc.: 0xe897cF267CE2bad3C571940F5a1176Ddcf0819f7<br/><br/>
+**BTC**: t1NmxPMWY8EPELxAKRnHi9NGW9NWNypzLzo<br/>
+**ETH**: 0xe897cF267CE2bad3C571940F5a1176Ddcf0819f7<br/>
+Any token based on **ETH** like **OMG**, **USDT**, **TUSD**, **BTM**, **PAY**, etc.: 0xe897cF267CE2bad3C571940F5a1176Ddcf0819f7<br/><br/>
 
 ### Pay some of my vices like alcohol, cigarettes, casino, etc.
 
-BTCZ: t1NmxPMWY8EPELxAKRnHi9NGW9NWNypzLzo<br/>
-XMR: 45jzGRAM3pAJ19fdtVagrTUzwfpL6EbKo7bvK8jybRJaQcpQYXd4pWE7DKurUvq7pe7w2TbnEatuWAw7ArfRu1Jd33oBWTb<br/>
-IOTA: T9LERQPWWYOUFPJKQPRSWUTJWOCG9TLPMOROFNZV9IGYQEPINZPGUFFGYFPREMWFWATZNTQFNYMEYMMEAUDECTMZMW<br/>
-ETC: 0x009e9791b8da25bBda05aD0b92f83615a623D544<br/>
-BTG: GNDeARn5SG9EpZKCWqWT1FAyp8DjtTRtyx<br/>
-QTUM: QRoxfYMNadqeQmtNWhajVjX5JgRgZczaC9<br/>
-DOGE: DDKL7UuK6jEATb87BMxRP5bWJi18soqKD3<br/>
-XLM: GA2BI5XZ6DXITCF36TSPFTOACUONI2524Z4IF2CGWR7CRIPN6MRBC7ZT<br/><br/>
+**BTCZ**: t1NmxPMWY8EPELxAKRnHi9NGW9NWNypzLzo<br/>
+**XMR**: 45jzGRAM3pAJ19fdtVagrTUzwfpL6EbKo7bvK8jybRJaQcpQYXd4pWE7DKurUvq7pe7w2TbnEatuWAw7ArfRu1Jd33oBWTb<br/>
+**IOTA**: T9LERQPWWYOUFPJKQPRSWUTJWOCG9TLPMOROFNZV9IGYQEPINZPGUFFGYFPREMWFWATZNTQFNYMEYMMEAUDECTMZMW<br/>
+**ETC**: 0x009e9791b8da25bBda05aD0b92f83615a623D544<br/>
+**BTG**: GNDeARn5SG9EpZKCWqWT1FAyp8DjtTRtyx<br/>
+**QTUM**: QRoxfYMNadqeQmtNWhajVjX5JgRgZczaC9<br/>
+**DOGE**: DDKL7UuK6jEATb87BMxRP5bWJi18soqKD3<br/>
+**XLM**: GA2BI5XZ6DXITCF36TSPFTOACUONI2524Z4IF2CGWR7CRIPN6MRBC7ZT<br/><br/>
 
 ### Think about the hungry children (my hungry children)
 
-ZEC: t1ZzxhxiXcUWsaSCTUzKxBNepq5ScBQsFLK<br/>
-BCH: 1Lw5m8KVU9ww9mpK92mvAzgu1xXhygDQLp<br/>
-LTC: LNAGuJFRSaahaGYi7cGAbYfdANtwAw6BcS<br/><br/>
+**ZEC**: t1ZzxhxiXcUWsaSCTUzKxBNepq5ScBQsFLK<br/>
+**BCH**: 1Lw5m8KVU9ww9mpK92mvAzgu1xXhygDQLp<br/>
+**LTC**: LNAGuJFRSaahaGYi7cGAbYfdANtwAw6BcS<br/><br/>
 
 
 FAQ
