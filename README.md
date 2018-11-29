@@ -224,6 +224,5 @@ Well... you'll get a proper discount with your next donation.<br/>
 <br/><br/>
 License
 -------
-
-Bitcoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
+Crypto FX Wallet is released under the terms of the MIT license. See [COPYING](COPYING) for more
 information or see https://opensource.org/licenses/MIT.<br/>
