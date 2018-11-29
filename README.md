@@ -15,7 +15,7 @@ Crypto FX Wallet started as a personal project to see my BitcoinZ wallet using a
 Previous to the fork in June 2018, there was a graphical Java Swing wallet based on a ZenCash project,
 but after the fork it didn't work anymore for me. Of course, I could do the usual operations through
 the command line, but I wanted something faster and less prone to errors.<br/>
-The project is based on JavaFX 11 and allows to change some features (explained below) avoiding the 
+The project is based on JavaFX 11  and the Eclipse IDE and allows to change some features (explained below) avoiding the 
 process of rebuilding everything.<br/>
 
 <br/><br/>
@@ -62,6 +62,7 @@ my X Coin addresses here.<br/>
 ### A proper configuration of the 'command.properties' file
 You should be able to replace the BitcoinZ commands for the ones of the other crypto coin.
 They are very similar, but they are not the same.<br/>
+You can find them inside of the **src** folder of the crypto node.
 
 
 <br/><br/>
@@ -186,6 +187,17 @@ Any token based on **ETH** like **OMG**, **USDT**, **TUSD**, **BTM**, **PAY**, e
 <br/><br/>
 FAQ
 ---
+
+### I'm getting this error 'Error: JavaFX runtime components are missing, and are required to run this application' when I try to run the application from my IDE or running directly the executable jar file.
+
+Probably, you have forgotten (or mistyped) to set the parameters to the JavaFX SDK 11 path.<br/>
+If you are trying to run the jar file directly, then you should put the following in between **java -jar** and **cryptoFXWallet.jar**.<br/>
+If you are trying to run it from your console, then you should add the following in the VM arguments options (**Run as...->Run Configurations...->Arguments->VM Arguments** for the Eclipse IDE):<br/><br/>
+
+--module-path=<javafx_sdk_folder>/lib --add-modules=javafx.controls --add-modules=javafx.fxml --add-modules=javafx.media
+
+<br/><br/>
+That's why run it using the script is easier once you set the required absolute paths there.
 
 ### The update of Crypto FX Wallet is too slow
 
