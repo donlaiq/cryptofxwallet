@@ -4,7 +4,7 @@
 What is Crypto FX Wallet?
 -------------------------
 
-Crypto FX Wallet is a layer working above the command line wallet of a crypto node.<br/>
+Crypto FX Wallet is a layer working above the command line wallet of a crypto node. It handles just a limited subset of all the available commands.<br/>
 It should work on Bitcoin and all the cryptocoins derivated from it, like Bitcoin Cash, ZCash, Bitcoin Gold... maybe for BCHABC and BCHSV too.
 
 <br/><br/>
@@ -84,7 +84,7 @@ so I have created the jar files doing the following from Eclipse:<br/>
 File->Export...->Java->Runnable JAR file->Extract required libraries into generated JAR->Finish.<br/>
 It is a Maven project, but I have used Maven just to manage the dependencies. I didn't find a way to 
 set up a convincing building task. Maybe in the next release.<br/>
-If you want to run the jar file directly, remember to run it with the required parameters to <folder_where_you_unzip_javafx>/lib.
+If you want to run the jar file directly, remember to run it with the required parameters to <javafx_sdk_folder>/lib.
 That is what the included scripts are for.
 
 
@@ -94,7 +94,7 @@ How should I use Crypto FX Wallet?
 
 After the application is started you can see in the top of the window a bar menu with options to backup or import the addresses of your wallet. The backup will save a file called "cryptoBackup.txt" in the folder you choose. To import an addresses
 you need to choose a file with an UTF-8 encode from your file system (it doesn't matter its name or its extension), but the application will expect to find the character '-' in every line. If the left side of the character '-' starts with a z, then the address to import is a Z address. If the left side of the character '-' starts with anything else, then it tries to import the transparent address handled by the wallet. The right side of the character '-' should be the private key of the address. <br/>
-A few valid lines you can set in the file, replacing <private_key> by your own private key:<br/><br/>
+Next I show you a few valid lines you can set in the file, replacing <private_key> by your own private key:<br/><br/>
 
 -<private_key> (for T address)<br/>
 z-<private_key> (for Z address)<br/>
@@ -190,7 +190,7 @@ FAQ
 
 ### I'm getting this error 'Error: JavaFX runtime components are missing, and are required to run this application' when I try to run the application from my IDE or running directly the executable jar file.
 
-Probably, you have forgotten (or mistyped) to set the parameters to the JavaFX SDK 11 path.<br/>
+Probably, you have forgotten (or mistyped) to set the parameters to the absolute JavaFX SDK 11 path.<br/>
 If you are trying to run the jar file directly, then you should put the following in between **java -jar** and **cryptoFXWallet.jar**.<br/>
 If you are trying to run it from your console, then you should add the following in the VM arguments options (**Run as...->Run Configurations...->Arguments->VM Arguments** for the Eclipse IDE):<br/><br/>
 
@@ -208,6 +208,10 @@ The wallet will look for updates every minute. If you do an operation that shoul
 
 Don be panic! In a few minutes it will be normalized again. It's a weird behavior, at least of BitcoinZ,
 that I don't know why is happening.<br/>
+
+### There are some things I can't do with Crypto FX Wallet
+
+Crypto FX Wallet is just a subset of the command line wallet, handling the more relevant commands to me.
 
 ### Is Crypto FX Wallet safe?
 
