@@ -109,7 +109,7 @@ address in the corresponding text field, put the amount to send in the correspon
 text field and click on the send button.<br/>
 Donate button is just a stupidity showing an animation, but its only utility is to change
 the destination address to one of my addresses. Next you should click on the send button
-if you really want to donate.<br/></br/>
+if you really want to donate.<br/><br/>
 
 The right side of the application shows the last 100 transactions associated with addresses of the wallet.
 
