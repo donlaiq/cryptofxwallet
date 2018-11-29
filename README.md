@@ -196,7 +196,7 @@ If you are trying to run it from your console, then you should add the following
 
 --module-path=<javafx_sdk_folder>/lib --add-modules=javafx.controls --add-modules=javafx.fxml --add-modules=javafx.media
 
-<br/><br/>
+<br/>
 That's why run it using the script is easier once you set the required absolute paths there.
 
 ### The update of Crypto FX Wallet is too slow
