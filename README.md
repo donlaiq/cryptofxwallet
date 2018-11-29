@@ -4,10 +4,9 @@ What is Crypto FX Wallet?
 -------------------------
 
 Crypto FX Wallet is a layer working above the command line wallet of a crypto node.<br/>
-It should work on Bitcoin and all the cryptocoins derivated from it, like Bitcoin Cash,
-ZCash, ZenCash, etc.
+It should work on Bitcoin and all the cryptocoins derivated from it, like Bitcoin Cash, ZCash, Bitcoin Gold... maybe for BCHABC and BCHSV too.
 
-
+<br/><br/>
 Why Crypto FX Wallet?
 ---------------------
 
@@ -18,13 +17,12 @@ the command line, but I wanted something faster and less prone to errors.<br/>
 The project is based on JavaFX 11 and allows to change some features (explained below) avoiding the 
 process of rebuilding everything.<br/>
 
-
+<br/><br/>
 What do I need to run Crypto FX Wallet?
 ------------------------------------
 
 ### A proper configuration to run a crypto node
-This is basically a layer over the command line of a crypto node, so you should follow 
-the official instructions to set up your desired node.<br/>
+This is basically a layer over the command line of a crypto node, so you should follow the official instructions to set up your desired node.<br/>
 https://github.com/bitcoin/bitcoin (for Bitcoin Core),<br/>
 https://github.com/btcz/bitcoinz (for BitcoinZ),<br/>
 etc.<br/>
@@ -41,20 +39,20 @@ https://gluonhq.com/products/javafx/<br/>
 You can follow the examples uploaded in the Release tab, but here you can get a glimpse
 about what every line means:<br/>
 
-**node.path**: absolute path the executables of the node, usually inside the 'src' folder.<br/>
+**node.path**: absolute path to the executables of the node, usually inside the 'src' folder.<br/>
 **javafx.sdk.path**: <folder_where_you_unzip_javafx>/lib.<br/>
-**blockchain.explorer.blockcount.api**: URL to some REST service providing the total amount of blocks
+**blockchain.explorer.blockcount.api**: URL to some web service providing the total amount of blocks
 for the crypto coin.<br/>
-**time.zone**: to use the same time that the blockchain uses to watch the transactions.<br/>
+**time.zone**: to use the same time zone as the blockchain to follow the transaction history.<br/>
 **coin.code**: the code of the cryptocoin. ZEC for ZCash, LTC for Litecoin, etc.<br/>
 **start.command**: executable file inside node.path to start the node.<br/>
 **cli.command**: executable file inside node.path to query to the blockchain.<br/>
 **system.command**: system interpreter. 'sh' on linux distros, 'cmd.exe' in Windows.<br/>
 **system.command.parameter**: parameter going with the system interpreter. '-c' in linux distros,
-'/k' in Windows.<br/>
+'/c' in Windows.<br/>
 **encode**: to get a proper string configuration according to the desired foreign language.<br/>
-**foreign.language**: the default language is English. If you want to replace the second language, let's 
-say to German, then you should put 'German' here.<br/>
+**foreign.language**: Second language written in English. If you want to replace the second language, let's 
+say to German, then you should put **German** here.<br/>
 **two.kind.of.addresses**: true if there are Z and T addresses; false, otherwise.<br/>
 **donate.address**: if you are moving to another crypto coin, let's say X Coin, and you want to put one of 
 my X Coin addresses here.<br/>
@@ -65,17 +63,17 @@ You should be able to replace the BitcoinZ commands for the ones of the other cr
 They are very similar, but they are not the same.<br/>
 
 
-
+<br/><br/>
 How should I run Crypto FX Wallet?
 ----------------------------------
 
 You can use the package for your OS in the tab Releases or build the jar file from the source code
 and run them with the corresponding parameters to call the JavaFX libraries, but I advise you to use 
 the scripts to make it easier.<br/>
-I can't test it in Mac OS, but it should be able to run it too.<br/>
+I couldn't test it in Mac OS, but it should be able to run it too.<br/>
 
 
-
+<br/><br/>
 How should I construct Crypto FX Wallet from the source code?
 -------------------------------------------------------------
 
@@ -84,16 +82,17 @@ so I have created the jar files doing the following from Eclipse:<br/>
 File->Export...->Java->Runnable JAR file->Extract required libraries into generated JAR->Finish.<br/>
 It is a Maven project, but I have used Maven just to manage the dependencies. I didn't find a way to 
 set up a convincing building task. Maybe in the next release.<br/>
+If you want to run the jar file directly, remember to run it with the required parameters to <folder_where_you_unzip_javafx>/lib.
+That is what the included scripts are for.
 
 
-
+<br/><br/>
 How should I use Crypto FX Wallet?
 ----------------------------------
 
 After the application is started you can see in the top of the window a bar menu with options to backup or import the addresses of your wallet. The backup will save a file called "cryptoBackup.txt" in the folder you choose. To import an addresses
-you need to choose a file with an UTF-8 encode from your file system (it doesn't matter its name or its extension), but the application will expect to find the character '-' in every line. If the left side of the character "-" starts with a z, then the address to import is a Z address. If the left side of the character "-" starts with anything else, then it tries to import the transparent address handled by the wallet. The right side of the character "-" should be the private key of the address. <br/>
-Finally, what it matters to import an address is to have its private key, but the methods to import one or another are different, so it's useful to know that when there are two kind of addresses and to use the right method.<br/>
-A few valid lines you can set in the file, replacing <private_key> by your own private key.<br/><br/>
+you need to choose a file with an UTF-8 encode from your file system (it doesn't matter its name or its extension), but the application will expect to find the character '-' in every line. If the left side of the character '-' starts with a z, then the address to import is a Z address. If the left side of the character '-' starts with anything else, then it tries to import the transparent address handled by the wallet. The right side of the character '-' should be the private key of the address. <br/>
+A few valid lines you can set in the file, replacing <private_key> by your own private key:<br/><br/>
 
 -<private_key> (for T address)<br/>
 z-<private_key> (for Z address)<br/>
@@ -110,9 +109,11 @@ address in the corresponding text field, put the amount to send in the correspon
 text field and click on the send button.<br/>
 Donate button is just a stupidity showing an animation, but its only utility is to change
 the destination address to one of my addresses. Next you should click on the send button
-if you really want to donate.<br/>
+if you really want to donate.<br/></br/>
 
+The right side of the application shows the last 100 transactions associated with addresses of the wallet.
 
+<br/><br/>
 Flexibility of Crypto FX Wallet
 -------------------------------
 
@@ -120,41 +121,41 @@ If you are not a coder you can do several changes to the application without reb
 
 ### The video of the splash screen is boring
 
-You can change it for one of your election, but remember to call it 'splashScreenVideo.mp4' and to put it
-inside the folder 'resources'.<br/>
+You can change it for one of your election, but remember to call it **splashScreenVideo.mp4** and to put it
+inside the folder **resources**.<br/>
 
 ### I would like to change some colors, fonts, etc.
 
-You can edit the files 'style.css' and 'messagePopupStyle.css' inside the 'resources' folder to do it. 
-I suggest you to keep an eye on the .fxml files in the source code to get a better understanding about what 
+You can edit the files **style.css** and **messagePopupStyle.css** inside the **resources** folder to do it. 
+I suggest you to keep an eye on the **.fxml files** in the source code to get a better understanding about what 
 you are changing.<br/>
 
 ### I would like to use another English sentences in the application
 
-Yoo should edit the 'english.properties' file inside the 'resource' folder.<br/>
+Yoo should edit the **english.properties** file inside the **resource** folder.<br/>
 
 ### I don't want Spanish as a second language
 
-You can edit the 'foreign.properties' file with your own language.<br/>
+You can edit the **foreign.properties** file with your own language.<br/>
 
-### I don't want to have the logo from BitcoinZ
+### I don't want to have the logo from BitcoinZ inside the application
 
-Change the images 'background.png' and 'mainLogo.png' for your desired replacement. Remember to keep the same 
-names and keep in mind that 'mainLogo.png' is hide when the synchronization is not 100%. So play with that.<br/>
+Change the images **background.png** and **mainLogo.png** for your desired images. Remember to keep the same 
+names and keep in mind that **mainLogo.png** is hide when the synchronization is not of 100%. So play with that.<br/>
 
 ### I would like use it with another crypto coin
 
-You can do it modifying the files 'wallet.properties' and 'command.properties' as it's explained above.<br/>
+You can do it modifying the files **wallet.properties** and **command.properties** as it's explained above.<br/>
 
 ### Remember not to change the left side of the '=' in the .properties files, just the right side
 
-The application is expecting to find those name
+The application is expecting to find those name.<br/>
 
 ### I would like to paint the arrow of pink
 
 Ok, do it.<br/>
 
-
+<br/><br/>
 Donate
 ------
 
@@ -181,7 +182,7 @@ Any token based on **ETH** like **OMG**, **USDT**, **TUSD**, **BTM**, **PAY**, e
 **BCH**: 1Lw5m8KVU9ww9mpK92mvAzgu1xXhygDQLp<br/>
 **LTC**: LNAGuJFRSaahaGYi7cGAbYfdANtwAw6BcS<br/><br/>
 
-
+<br/><br/>
 FAQ
 ---
 
@@ -197,12 +198,12 @@ that I don't know why is happening.<br/>
 
 ### Is Crypto FX Wallet safe?
 
-I guess it should be as safe as your command line wallet, but I'm not a security guru, so I can't confirm that.
+I guess it should be as safe as your command line wallet, but I'm not a security expert, so I can't confirm that.
 Use it at your own risk.<br/>
 
 ### I want to pay you with another crypto coin, not listed before, what should I do?
 
-Send me a direct message through twitter to @donlaiq.<br/>
+Let me know it and I'll be glad to create a new wallet for that cryptocoin.<br/>
 
 ### I want to hire you, how can I contact you?
 
@@ -220,7 +221,7 @@ Yes, definitely.<br/>
 
 Well... you'll get a proper discount with your next donation.<br/>
 
-
+<br/><br/>
 License
 -------
 
