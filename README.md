@@ -241,5 +241,4 @@ Well... you'll get a proper discount with your next donation.<br/>
 <br/><br/>
 License
 -------
-Crypto FX Wallet is released under the terms of the MIT license. See [COPYING](COPYING) for more
-information or see https://opensource.org/licenses/MIT.<br/>
+Crypto FX Wallet is released under the terms of the MIT license. See https://opensource.org/licenses/MIT.<br/>
