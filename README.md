@@ -163,7 +163,7 @@ Donate
 
 ### Buy me a building, an helicopter, a yacht, etc.
 
-**BTC**: t1NmxPMWY8EPELxAKRnHi9NGW9NWNypzLzo<br/>
+**BTC**: 3PcmYiCNsFUJiqwqNcJ78RAk9zhC7b3t2m<br/>
 **ETH**: 0xe897cF267CE2bad3C571940F5a1176Ddcf0819f7<br/>
 Any token based on **ETH** like **OMG**, **USDT**, **TUSD**, **BTM**, **PAY**, etc.: 0xe897cF267CE2bad3C571940F5a1176Ddcf0819f7<br/><br/>
 
