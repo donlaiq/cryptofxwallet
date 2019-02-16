@@ -5,7 +5,7 @@ What is Crypto FX Wallet?
 -------------------------
 
 Crypto FX Wallet is a layer working above the command line wallet of a crypto node. It handles just a limited subset of all the available commands.<br/>
-It should work on Bitcoin and all the cryptocoins derivated from it, like Bitcoin Cash, ZCash, Bitcoin Gold... maybe for BCHABC and BCHSV too.
+It should work on Bitcoin and all the cryptocoins derivated from it, like Bitcoin Cash, ZCash, Bitcoin Gold, etc.
 
 <br/><br/>
 Why Crypto FX Wallet?
@@ -36,34 +36,8 @@ https://www.oracle.com/technetwork/java/javase/downloads/index.html<br/>
 Download JavaFX 11 for your OS and unzip it in a known folder.<br/>
 https://gluonhq.com/products/javafx/<br/>
 
-### A proper configuration of the 'wallet.properties' file
-You can follow the examples uploaded in the Release tab, but here you can get a glimpse
-about what every line means:<br/>
-
-**node.path**: absolute path to the executables of the node, usually inside the 'src' folder.<br/>
-**javafx.sdk.path**: <folder_where_you_unzip_javafx>/lib.<br/>
-**blockchain.explorer.blockcount.api**: URL to some web service providing the total amount of blocks
-for the crypto coin.<br/>
-**time.zone**: to use the same time zone as the blockchain to follow the transaction history.<br/>
-**coin.code**: the code of the cryptocoin. ZEC for ZCash, LTC for Litecoin, etc.<br/>
-**start.command**: executable file inside node.path to start the node.<br/>
-**cli.command**: executable file inside node.path to query to the blockchain.<br/>
-**system.command**: system interpreter. 'sh' on linux distros, 'cmd.exe' in Windows.<br/>
-**system.command.parameter**: parameter going with the system interpreter. '-c' in linux distros,
-'/c' in Windows.<br/>
-**encode**: to get a proper string configuration according to the desired foreign language.<br/>
-**foreign.language**: Second language written in English. If you want to replace the second language, let's 
-say to German, then you should put **German** here.<br/>
-**two.kind.of.addresses**: true if there are Z and T addresses; false, otherwise.<br/>
-**donate.address**: if you are moving to another crypto coin, let's say X Coin, and you want to put one of 
-my X Coin addresses here.<br/>
-
-
-### A proper configuration of the 'command.properties' file
-You should be able to replace the BitcoinZ commands for the ones of the other crypto coin.
-They are very similar, but they are not the same.<br/>
-You can find them inside of the **src** folder of the crypto node.
-
+### A proper configuration of the 'setup.properties' file
+The current version of the application allows to configure this file directly from the GUI. There are default options for every single cryptocoin configured in the wallet, you can modify at your will. <br/>
 
 <br/><br/>
 How should I run Crypto FX Wallet?
