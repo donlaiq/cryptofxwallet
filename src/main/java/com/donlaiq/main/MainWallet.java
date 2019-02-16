@@ -9,10 +9,12 @@ package com.donlaiq.main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class MainWallet extends Application {
     
-    private SplashScreen splashScreen;
+    //private SplashScreen splashScreen;
+	private SetupScreen setupScreen;
 
     public static void main(String[] args) 
     {
@@ -22,8 +24,11 @@ public class MainWallet extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception 
     {
-    	splashScreen = new SplashScreen(primaryStage);
-    	splashScreen.display();
+    	/*ZCashBlockCount z = new ZCashBlockCount();
+    	z.getBlockCount();*/
+    	//primaryStage.initStyle(StageStyle.UNDECORATED);
+    	setupScreen = new SetupScreen(primaryStage);
+    	setupScreen.display();
     }
 
 }

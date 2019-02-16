@@ -24,7 +24,7 @@ public class TransactionListProcessHandler extends ProcessHandler{
 		try 
 		{
 			properties = new Properties();
-			properties.load(TransactionListProcessHandler.class.getClassLoader().getResourceAsStream("resources/wallet.properties"));
+			properties.load(TransactionListProcessHandler.class.getClassLoader().getResourceAsStream("resources/setup.properties"));
 		}
 		catch(Exception e) {}
 	}
@@ -74,7 +74,10 @@ public class TransactionListProcessHandler extends ProcessHandler{
         		
         		time = String.valueOf(year) + "-" + monthToString + "-" + dayToString + " " + hourToString + ":" + minuteToString + ":" + secondToString;
         		
-        		transactionList.add(new Transaction(time, amount, address, txid));
+        		if(!amount.startsWith("-"))
+        			transactionList.add(new Transaction(time, amount, address, txid));
+        		else
+        			transactionList.add(new Transaction(time, amount, "", txid));
         	}
         }
         

@@ -1,0 +1,222 @@
+.button {
+    -fx-text-fill: #f7b61a;
+    -fx-background-color: #111111;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+    -fx-border-color: #ffffff;
+}
+
+.button:hover {
+	-fx-cursor:hand
+}
+
+#nodePathButton, #javaFXSDKPathButton {
+	-fx-border-color: #111111;
+}
+
+.label {
+	-fx-text-fill: #f7b61a;
+}
+
+
+
+.text-field {
+	-fx-text-fill: #c0c0c0;
+	-fx-border-radius: 10;
+	-fx-border-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-background-color: rgba(55,55,55,0.75),
+                           rgba(36,36,36,0.75),
+                           linear-gradient(to bottom,#242424 0%,#434343 100%);
+    -fx-background-insets: 0 1 1 0, 1 0 0 1, 1;
+    -fx-prompt-text-fill: #ffffff;
+}
+
+#gridPane {
+	-fx-hgap: 10;
+}
+
+.combo-box-base {
+	-fx-background-color: rgba(55,55,55,0.75),
+                           rgba(36,36,36,0.75),
+                           linear-gradient(to bottom,#242424 0%,#434343 100%);
+	-fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #ffffff;
+    -fx-text-fill: #c0c0c0;
+}
+
+.combo-box-base .cell:selected {
+	-fx-background-color: rgba(55,55,55,0.75),
+	                           rgba(36,36,36,0.75),
+	                           linear-gradient(to bottom,#242424 0%,#434343 100%);
+	-fx-border-radius: 10;
+    -fx-background-radius: 10;
+	-fx-text-fill: #ffffff;
+	-fx-text-fill: #c0c0c0;
+}
+
+.combo-box-popup .list-view .list-cell{
+    -fx-text-fill: #ffffff;
+    -fx-background-color: rgba(55,55,55,0.75),
+                           rgba(36,36,36,0.75),
+                           linear-gradient(to bottom,#242424 0%,#434343 100%);
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover {
+    -fx-background-color: rgba(55,55,55,0.75),
+                           rgba(36,36,36,0.75),
+                           linear-gradient(to bottom,#242424 0%,#434343 100%);
+}
+
+
+
+.border-pane {
+	-fx-background-color: #111111;
+}
+
+#vBoxMenuBar, .split-pane {
+	-fx-background-color: #111111;
+	-fx-padding: 3;
+}
+
+.split-pane-divider {
+	-fx-pref-height: 1;
+	-fx-min-height: 1;
+	-fx-max-height: 1;
+	-fx-background-color: #000000;
+}
+
+#donateLabel, #tB, #zB, #totalB, #progressLabel, #myAddressesLabel, #destinationAddressLabel, #amountToSendLabel, #codeLabel, #percentageLabel {
+	-fx-text-fill: #f7b61a;
+}
+
+#tBalanceLabel, #zBalanceLabel, #totalBalanceLabel {
+	-fx-text-fill: #ffffff;
+}
+
+.column {
+	-fx-background-color: #000000;
+}
+
+#mainPane {
+	-fx-background-color: #000000;
+	-fx-padding: 5;
+}
+
+.table-view {
+	-fx-background-color: #111111;
+	-fx-table-cell-border-color: transparent;
+	-fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.table-view .table-cell{
+	-fx-text-fill: #dddddd;
+}
+
+.table-row-cell:even, .list-cell:even{
+	-fx-background-color: #000000;
+	-fx-text-fill: #dddddd;
+	-fx-border-color: transparent;
+}
+
+.table-row-cell:odd, .list-cell:odd {
+	-fx-background-color: #111111;
+	-fx-text-fill: #dddddd;
+	-fx-border-color: transparent;
+}
+
+
+
+
+.table-view:row-selection .table-row-cell:selected .cell {
+	-fx-background-color: #dddddd;
+	-fx-text-fill: #111111;
+	-fx-border-color: transparent;
+}
+
+.table-view .column-header-background .label {
+    -fx-background-color: #111111;
+    -fx-text-fill: #f7b61a;
+}
+
+.table-view .column-header-background {
+	-fx-background-color: #111111;
+}
+
+.table-view .column-header {
+    -fx-background-color: #000000;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.table-view .filler {
+	-fx-background-color: #111111;
+}
+
+.menu-bar .label {
+	-fx-text-fill: #f7b61a;	
+}
+
+.menu {
+	-fx-text-fill: #f7b61a;	
+	-fx-background-color: #111111;
+}
+
+.context-menu {
+	-fx-background-color: #111111;
+	-fx-border-color: #ffffff;
+}
+
+.menu-item, .radio-menu-item, #tableViewContainer, #anchorPane {
+	-fx-background-color: #111111;
+}
+
+.radio-menu-item
+{
+    -fx-mark-color: #ffffff;
+}
+
+.separator *.line { 
+	-fx-border-color:#ffffff;
+}
+
+.menu-bar, #sendPane, #synchPane, #tableViewContainer{
+	-fx-background-color: #111111;
+	-fx-border-color: #ffffff;
+	-fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+#gridPane {
+	-fx-background-color: #111111;
+	-fx-border-color: #ffffff;
+	-fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+}
+
+#sendPane, #synchPane, #rightVBox {
+	-fx-padding: 5;
+}
+
+#leftVBox, #amountHbox {
+	-fx-spacing: 5;
+}
+
+
+.thumb, .increment-button, .decrement-button {
+	-fx-background-color: rgba(55,55,55,0.75),
+                           rgba(36,36,36,0.75),
+                           linear-gradient(to bottom,#242424 0%,#434343 100%);
+	-fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.increment-arrow, .decrement-arrow {
+	-fx-background-color: #ffffff;
+}

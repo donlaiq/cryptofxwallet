@@ -36,7 +36,7 @@ public class SplashScreen extends Stage
 	private Stage primaryStage;
 	private Label initializaingLabel;
 	private ExecutorService executorService;
-	private String coinCode;
+	private String coinName;
 	private Properties pathProperty, messageProperties;
 	
 	public SplashScreen(Stage primaryStage)
@@ -49,10 +49,10 @@ public class SplashScreen extends Stage
 		try
 		{
 			pathProperty = new Properties();
-			pathProperty.load(SplashScreen.class.getClassLoader().getResourceAsStream("resources/wallet.properties"));
+			pathProperty.load(SplashScreen.class.getClassLoader().getResourceAsStream("resources/setup.properties"));
 			messageProperties = new Properties();
 			messageProperties.load(SplashScreen.class.getClassLoader().getResourceAsStream("resources/english.properties"));
-			coinCode = pathProperty.getProperty("coin.code");
+			coinName = pathProperty.getProperty("cryptocoin");
 		}
 		catch(Exception e)
 		{
@@ -63,6 +63,7 @@ public class SplashScreen extends Stage
 	public void display()
 	{
 		task = new NodeTask();
+		task.startNode(false);
 			
 		executorService = Executors.newFixedThreadPool(1);
     	executorService.execute(task);
@@ -118,17 +119,17 @@ public class SplashScreen extends Stage
 		MediaView mediaView = new MediaView(mp);
 		mediaView.setPreserveRatio(false);
 		mediaView.setFitWidth(600);
-		mediaView.setFitHeight(400);
+		mediaView.setFitHeight(338);
 		
 		root.getChildren().add(mediaView);
 		
-		initializaingLabel = new Label("   Starting " + coinCode + " Node...");
+		initializaingLabel = new Label("   Starting " + coinName + " Node...");
 		initializaingLabel.setFont(Font.font("Verdana", 15));
 		initializaingLabel.setStyle("-fx-text-fill: #f7b61a;");
 		root.getChildren().add(initializaingLabel);
 		
 		root.setStyle("-fx-background-color: #000000;");
-		scene = new Scene(root, 600, 420);
+		scene = new Scene(root, 600, 360);
 		setScene(scene);
 		      
 		mp.play();
@@ -146,11 +147,12 @@ public class SplashScreen extends Stage
 	private void loadMainStage()
 	{
 		try {
-			WalletController btczWalletController = new WalletController(task.getNodeStarter(), primaryStage);
+			WalletController walletController = new WalletController(task, primaryStage);
 			
 			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("main.fxml"));
-	    	fxmlLoader.setController(btczWalletController);
+			//fxmlLoader.setLocation(getClass().getResource("main.fxml"));
+			fxmlLoader.setLocation(getClass().getResource("/resources/fxml/main.fxml"));
+	    	fxmlLoader.setController(walletController);
 			
 	        
 	        Pane mainPane = (Pane)fxmlLoader.load();
@@ -159,7 +161,7 @@ public class SplashScreen extends Stage
 	
 	        Scene scene = new Scene(mainPane);
 	       
-	        scene.getStylesheets().add(SplashScreen.class.getClassLoader().getResource("resources/style.css").toExternalForm());
+	        scene.getStylesheets().add(SplashScreen.class.getClassLoader().getResource("resources/setup.css").toExternalForm());
 	        
 	        primaryStage.setTitle("Crypto FX Wallet");
 	        primaryStage.setScene(scene);

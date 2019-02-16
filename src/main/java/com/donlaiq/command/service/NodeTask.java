@@ -13,28 +13,39 @@ import javafx.concurrent.Task;
 public class NodeTask extends Task<Boolean>{
 	
 	private NodeStarter nodeStarter;
-	private boolean isStartedNode;
 	
 	public NodeTask()
 	{
 		nodeStarter = new NodeStarter();
-		isStartedNode = nodeStarter.startNode();
 	}
 
 	@Override
 	protected Boolean call() throws Exception 
 	{
-		if(isStartedNode)
-		{
-			nodeStarter.waitUntilNodeIsAvailable();
-			return true;
-		}
-		return false;
+		nodeStarter.waitUntilNodeIsAvailable();
+		return true;
 	}
 	
 
 	public NodeStarter getNodeStarter()
 	{
 		return nodeStarter;
+	}
+	
+	
+	public void releaseResources()
+	{
+		nodeStarter.releaseResources();
+	}
+	
+	public void startNode(boolean isRescan)
+	{
+		nodeStarter.startNode(isRescan);
+	}
+
+	
+	public boolean isNodeProcessAlive()
+	{
+		return nodeStarter.isAlive();
 	}
 }

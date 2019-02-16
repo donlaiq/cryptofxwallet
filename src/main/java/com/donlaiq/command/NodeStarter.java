@@ -29,20 +29,35 @@ public class NodeStarter {
 	// Process running the node
 	private Process cryptoNodeProcess;
 	
+	private String OS;
+	
 	/*
 	 * The commands are readed from an external file trying to make the application as extensible as possible.
 	 */
 	public NodeStarter()
 	{
+		OS = System.getProperty("os.name").toLowerCase();
+		
 		try
 		{
 			Properties walletProperties = new Properties();
-			walletProperties.load(NodeStarter.class.getClassLoader().getResourceAsStream("resources/wallet.properties"));
+			walletProperties.load(NodeStarter.class.getClassLoader().getResourceAsStream("resources/setup.properties"));
 			nodeAbsolutePath = walletProperties.getProperty("node.path");
 			startCommand = walletProperties.getProperty("start.command");
 			cliCommand = walletProperties.getProperty("cli.command");
-			systemCommand = walletProperties.getProperty("system.command");
-			systemCommandParameter = walletProperties.getProperty("system.command.parameter");
+			
+			if(OS.indexOf("win") >= 0)
+			{
+				systemCommand = "cmd.exe";
+				systemCommandParameter = "/c";
+				startCommand = startCommand + ".exe";
+				cliCommand = cliCommand + ".exe";
+			}
+			else 
+			{
+				systemCommand = "sh";
+				systemCommandParameter = "-c";
+			}
 		}
 		catch(Exception e) 
 		{
@@ -55,16 +70,20 @@ public class NodeStarter {
 	/*
 	 * It tries to start the node. 
 	 */
-	public boolean startNode() 
+	public boolean startNode(boolean isRescan) 
 	{
 		try
 		{
 			File file = new File(nodeAbsolutePath + startCommand);
 			if(file.exists())
 			{
-				ProcessBuilder bitcoinzCli = new ProcessBuilder();
-				bitcoinzCli.command(systemCommand, systemCommandParameter, nodeAbsolutePath + startCommand);
-		        cryptoNodeProcess = bitcoinzCli.start();
+				ProcessBuilder cli = new ProcessBuilder();
+				
+				if(isRescan)
+					cli.command(systemCommand, systemCommandParameter, nodeAbsolutePath + startCommand + " -rescan");
+				else
+					cli.command(systemCommand, systemCommandParameter, nodeAbsolutePath + startCommand);
+		        cryptoNodeProcess = cli.start();
 			}
 			else 
 				throw new Exception();
@@ -139,5 +158,11 @@ public class NodeStarter {
 			cryptoNodeProcess.descendants().forEach(sub->sub.destroy());
 			cryptoNodeProcess.destroy();
 		}
+	}
+	
+	
+	public boolean isAlive()
+	{
+		return cryptoNodeProcess.isAlive();
 	}
 }

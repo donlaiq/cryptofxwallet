@@ -22,9 +22,6 @@ public abstract class ProcessHandler {
 	private String command;
 	
 	
-	//protected int lengthTAddress, lengthTPrivateKey, lengthZAddress, lengthZPrivateKey;
-
-	
 	public ProcessHandler(String command)
 	{
 		this.command = command;
@@ -32,15 +29,21 @@ public abstract class ProcessHandler {
 		try
 		{
 			Properties walletProperties = new Properties();
-			walletProperties.load(ProcessHandler.class.getClassLoader().getResourceAsStream("resources/wallet.properties"));
+			walletProperties.load(ProcessHandler.class.getClassLoader().getResourceAsStream("resources/setup.properties"));
 			nodeAbsolutePath = walletProperties.getProperty("node.path");
 			cliCommand = walletProperties.getProperty("cli.command");
-			systemCommand = walletProperties.getProperty("system.command");
-			systemCommandParameter = walletProperties.getProperty("system.command.parameter");
-			/*lengthTAddress = Integer.valueOf(walletProperties.getProperty("length.t.address"));
-			lengthTPrivateKey = Integer.valueOf(walletProperties.getProperty("length.t.private.key"));
-			lengthZAddress = Integer.valueOf(walletProperties.getProperty("length.z.address"));
-			lengthZPrivateKey = Integer.valueOf(walletProperties.getProperty("length.z.private.key"));*/
+			
+			String OS = System.getProperty("os.name").toLowerCase();
+			if(OS.indexOf("win") >= 0)
+			{
+				systemCommand = "cmd.exe";
+				systemCommandParameter = "/c";
+			}
+			else 
+			{
+				systemCommand = "sh";
+				systemCommandParameter = "-c";
+			}
 		}
 		catch(Exception e) 
 		{
@@ -66,8 +69,6 @@ public abstract class ProcessHandler {
 
 			initializeScanner(commandProcess.getInputStream());
 			object = doSomething();
-			/*scanner.close();
-			scanner = null;*/
 		}
 		catch(Exception e)
 		{
@@ -75,8 +76,7 @@ public abstract class ProcessHandler {
 		}
 		finally
 		{
-			//if(scanner != null)
-				scanner.close();
+			scanner.close();
 			commandProcess.descendants().forEach(sub->sub.destroy());
 			commandProcess.destroy();
 		}

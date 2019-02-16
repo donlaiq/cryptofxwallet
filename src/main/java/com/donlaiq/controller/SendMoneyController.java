@@ -6,6 +6,8 @@
 
 package com.donlaiq.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 import com.donlaiq.command.ProcessHandlerWrapper;
@@ -18,25 +20,41 @@ import javafx.stage.Stage;
 public class SendMoneyController {
 
 	private Stage parentStage, grandparentStage;
-	private Properties popupProperties;
+	//private Properties popupProperties;
 	private String addressFrom, addressTo, amount;
+	
+	private Properties walletProperties, stringProperties;
 
 	@FXML
 	private Label label1, label2;
 	
-	public SendMoneyController(Stage parentStage, Properties popupProperties, String addressFrom, String addressTo, String amount)
+	public SendMoneyController(Stage parentStage, String addressFrom, String addressTo, String amount)
 	{
 		this.parentStage = parentStage;
-		this.popupProperties = popupProperties;
 		this.addressFrom = addressFrom;
 		this.addressTo = addressTo;
 		this.amount = amount;
+		
+		try
+		{
+			walletProperties = new Properties();
+			walletProperties.load(WalletController.class.getClassLoader().getResourceAsStream("resources/setup.properties"));
+			
+			stringProperties = new Properties();
+			BufferedReader in = new BufferedReader(new InputStreamReader(WalletController.class.getClassLoader().getResourceAsStream("resources/english.properties"), walletProperties.getProperty("encode")));
+			stringProperties.load(in);
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
 	protected void initialize()
 	{
-		label1.setText(popupProperties.getProperty("popup.send.money.first.line").replace("${coin.code}", amount + " " + popupProperties.getProperty("coin.code")));
+		label1.setText(stringProperties.getProperty("popup.send.money.first.line").replace("${coin.code}", amount + " " + walletProperties.getProperty("coin.code")));
 		label2.setText(addressTo);
 	}
 	
@@ -50,7 +68,7 @@ public class SendMoneyController {
 		processHandlerWrapper.sendMoney(addressFrom, addressTo, amount);
 		parentStage.close();
 		
-		MessagePopup mp = new MessagePopup(grandparentStage, popupProperties.getProperty("popup.money.sent.title"), popupProperties.getProperty("popup.money.sent.first.line"), popupProperties.getProperty("popup.money.sent.second.line"));
+		MessagePopup mp = new MessagePopup(grandparentStage, stringProperties.getProperty("popup.money.sent.title"), stringProperties.getProperty("popup.money.sent.first.line"), stringProperties.getProperty("popup.money.sent.second.line"));
 		mp.display();
 	}
 

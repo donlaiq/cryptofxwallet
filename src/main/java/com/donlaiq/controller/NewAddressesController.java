@@ -12,7 +12,11 @@ import com.donlaiq.command.ProcessHandlerWrapper;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class NewAddressesController {
@@ -20,9 +24,14 @@ public class NewAddressesController {
 	private Stage parentStage, grandparentStage;
 	private WalletController walletController;
 	private Properties popupProperties;
+	
+	private Lighting lighting;
 
 	@FXML
 	private Label label1, label2;
+	
+	@FXML
+	private Button okButton, cancelButton;
 	
 	public NewAddressesController(boolean isTAddress, Stage parentStage, WalletController walletController, Properties popupProperties)
 	{
@@ -30,6 +39,14 @@ public class NewAddressesController {
 		this.parentStage = parentStage;
 		this.walletController = walletController;
 		this.popupProperties = popupProperties;
+		
+		Light.Distant light = new Light.Distant();
+		light.setAzimuth(-90.0);
+		light.setColor(new Color(0.95, 0.95, 0.95, 1));
+		
+		lighting = new Lighting();
+		lighting.setLight(light);
+		lighting.setSurfaceScale(2.0);
 	}
 	
 	@FXML
@@ -39,6 +56,9 @@ public class NewAddressesController {
 		label2.setText(popupProperties.getProperty("popup.new.t.address.second.line"));
 		if(!isTAddress)
 			label2.setText(popupProperties.getProperty("popup.new.z.address.second.line"));
+		
+		okButton.setEffect(lighting);
+		cancelButton.setEffect(lighting);
 	}
 	
 	/*

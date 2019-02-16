@@ -33,7 +33,7 @@ public class MessagePopup extends Stage{
 		setTitle(title);
 		
 		FXMLLoader fxmlLoader = null;
-    	fxmlLoader = new FXMLLoader(getClass().getResource("messagePopup.fxml"));
+    	fxmlLoader = new FXMLLoader(getClass().getResource("/resources/fxml/messagePopup.fxml"));
     	
     	fxmlLoader.setController(new MessageController(this, firstLine, secondLine));
     	try 
@@ -41,7 +41,7 @@ public class MessagePopup extends Stage{
     		Pane mainPane = (Pane)fxmlLoader.load();
     		
     		Scene scene = new Scene(mainPane);
-    		mainPane.getStylesheets().add(MessagePopup.class.getClassLoader().getResource("resources/messagePopupStyle.css").toExternalForm());
+    		mainPane.getStylesheets().add(MessagePopup.class.getClassLoader().getResource("resources/setup.css").toExternalForm());
     		setScene(scene);
     	}
     	catch(Exception e) 

@@ -51,7 +51,7 @@ public class ProcessOutputSpec {
 		try
 		{
 			Properties properties = new Properties();
-			properties.load(new FileInputStream("wallet.properties"));
+			properties.load(new FileInputStream("setup.properties"));
 			
 			File file = new File(properties.getProperty("path") + properties.getProperty("start.command"));
 			assertTrue(file != null);
@@ -71,7 +71,7 @@ public class ProcessOutputSpec {
 		try
 		{
 			Properties properties = new Properties();
-			properties.load(new FileInputStream("wallet.properties"));
+			properties.load(new FileInputStream("setup.properties"));
 			
 			File file = new File(properties.getProperty("path") + properties.getProperty("cli.command"));
 			assertTrue(file != null);
@@ -81,85 +81,6 @@ public class ProcessOutputSpec {
 		{
 			assertTrue(e instanceof FileNotFoundException, () -> "Should throw FileNotFoundException");
 		}
-	}
-	
-	
-	@Test
-	@DisplayName("should return a list of the last N transactions associated with the addresses of the wallet")
-	void processReturningListOfTransactions()
-	{
-		String processOutput = "[\n" + 
-				"		  {\n" + 
-				"		    \"account\": \"\",\n" + 
-				"		    \"address\": \"taaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n" + 
-				"		    \"category\": \"receive\",\n" + 
-				"		    \"amount\": 10.00000000,\n" + 
-				"		    \"vout\": 0,\n" + 
-				"		    \"confirmations\": 14745,\n" + 
-				"		    \"blockhash\": \"abcd1\",\n" + 
-				"		    \"blockindex\": 1,\n" + 
-				"		    \"blocktime\": 1580404034,\n" + 
-				"		    \"txid\": \"dcba1\",\n" + 
-				"		    \"walletconflicts\": [\n" + 
-				"		    ],\n" + 
-				"		    \"time\": 1580403994,\n" + 
-				"		    \"timereceived\": 1580403994,\n" + 
-				"		    \"vjoinsplit\": [\n" + 
-				"		    ],\n" + 
-				"		    \"size\": 3173\n" + 
-				"		  },\n" + 
-				"		  {\n" + 
-				"		    \"account\": \"\",\n" + 
-				"		    \"address\": \"tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\n" + 
-				"		    \"category\": \"send\",\n" + 
-				"		    \"amount\": -0.84116581,\n" + 
-				"		    \"vout\": 1,\n" + 
-				"		    \"fee\": -0.00010000,\n" + 
-				"		    \"confirmations\": 14745,\n" + 
-				"		    \"blockhash\": \"abcd2\",\n" + 
-				"		    \"blockindex\": 1,\n" + 
-				"		    \"blocktime\": 1580404035,\n" + 
-				"		    \"txid\": \"dcba1\",\n" + 
-				"		    \"walletconflicts\": [\n" + 
-				"		    ],\n" + 
-				"		    \"time\": 1580403995,\n" + 
-				"		    \"timereceived\": 1580403995,\n" + 
-				"		    \"vjoinsplit\": [\n" + 
-				"		    ],\n" + 
-				"		    \"size\": 3173\n" + 
-				"		  },\n" + 
-				"		  {\n" + 
-				"		    \"account\": \"\",\n" + 
-				"		    \"address\": \"tffffffffffffffffffffffffffffffffff\",\n" + 
-				"		    \"category\": \"send\",\n" + 
-				"		    \"amount\": -10.00000000,\n" + 
-				"		    \"vout\": 0,\n" + 
-				"		    \"fee\": -0.00010000,\n" + 
-				"		    \"confirmations\": 14745,\n" + 
-				"		    \"blockhash\": \"abcd3\",\n" + 
-				"		    \"blockindex\": 1,\n" + 
-				"		    \"blocktime\": 1540404034,\n" + 
-				"		    \"txid\": \"dcba1\",\n" + 
-				"		    \"walletconflicts\": [\n" + 
-				"		    ],\n" + 
-				"		    \"time\": 1580403996,\n" + 
-				"		    \"timereceived\": 1580403996,\n" + 
-				"		    \"vjoinsplit\": [\n" + 
-				"		    ],\n" + 
-				"		    \"size\": 3173\n" + 
-				"		  }\n" + 
-				"		]";
-		
-		ProcessHandler processHandler = new TransactionListProcessHandler(command);
-		processHandler.initializeScanner(new ByteArrayInputStream(processOutput.getBytes()));
-		List<Transaction> outputList = (List<Transaction>)processHandler.executeProcess();
-		
-		Transaction t1 = new Transaction("2020-01-30 17:06:34", "10.00000000", "taaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "dcba1");
-		Transaction t2 = new Transaction("2020-01-30 17:06:35", "-0.84116581", "tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "dcba1");
-		Transaction t3 = new Transaction("2020-01-30 17:06:36", "-10.00000000", "tffffffffffffffffffffffffffffffffff", "dcba1");
-		
-		assertThat(outputList).isNotEmpty();
-		assertThat(outputList).containsExactly(t1, t2, t3);
 	}
 	
 	

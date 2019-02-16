@@ -6,14 +6,12 @@
 
 package com.donlaiq.command;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.Scanner;
 
 import com.donlaiq.command.factory.ReturnSingleOutputProcessHandler;
+import com.donlaiq.command.factory.ReturnValueOfInteresProcessHandler;
 import com.donlaiq.command.factory.ProcessHandler;
 import com.donlaiq.command.factory.ReturnNothingProcessHandler;
 import com.donlaiq.command.factory.TAddressBalanceProcessHandler;
@@ -26,17 +24,14 @@ import com.donlaiq.controller.model.Transaction;
 
 public class ProcessHandlerWrapper {
 	
-	private Properties properties, commandProperties;
+	private Properties properties;
 	
 	public ProcessHandlerWrapper()
 	{
 		try 
 		{
 			properties = new Properties();
-			properties.load(TransactionListProcessHandler.class.getClassLoader().getResourceAsStream("resources/wallet.properties"));
-			
-			commandProperties = new Properties();
-			commandProperties.load(TransactionListProcessHandler.class.getClassLoader().getResourceAsStream("resources/command.properties"));
+			properties.load(TransactionListProcessHandler.class.getClassLoader().getResourceAsStream("resources/setup.properties"));
 		}
 		catch(Exception e) {}
 	}
@@ -46,7 +41,7 @@ public class ProcessHandlerWrapper {
 	 */
 	public List<Transaction> getTransactionList()
 	{
-		ProcessHandler processHandler = new TransactionListProcessHandler(" " + commandProperties.getProperty("list.transactions"));
+		ProcessHandler processHandler = new TransactionListProcessHandler(" " + properties.getProperty("list.transactions"));
 		return (List<Transaction>)processHandler.executeProcess();
 	}
 	
@@ -55,7 +50,7 @@ public class ProcessHandlerWrapper {
 	 */
 	public String[] getBalances()
 	{
-		ProcessHandler processHandler = new TotalBalanceProcessHandler(" " + commandProperties.getProperty("get.total.balance"));
+		ProcessHandler processHandler = new TotalBalanceProcessHandler(" " + properties.getProperty("get.total.balance"));
 		return (String[])processHandler.executeProcess();
 	}
 	
@@ -64,8 +59,8 @@ public class ProcessHandlerWrapper {
 	 */
 	public List<Address> getTAddressesList()
 	{
-		ProcessHandler processHandler = new TAddressFinderProcessHandler(" " + commandProperties.getProperty("get.addresses.by.account"));
-		TAddressBalanceProcessHandler tAddressBalanceProcessHandler = new TAddressBalanceProcessHandler(" " + commandProperties.getProperty("t.address.balance"));
+		ProcessHandler processHandler = new TAddressFinderProcessHandler(" " + properties.getProperty("get.addresses.by.account"));
+		TAddressBalanceProcessHandler tAddressBalanceProcessHandler = new TAddressBalanceProcessHandler(" " + properties.getProperty("t.address.balance"));
 		tAddressBalanceProcessHandler.setAllAddresses((List<String>)processHandler.executeProcess());
 		return (List<Address>)tAddressBalanceProcessHandler.executeProcess();
 	}
@@ -76,11 +71,11 @@ public class ProcessHandlerWrapper {
 	public List<Address> getZAddressesList()
 	{
 		List<Address> zAddressList = new ArrayList<Address>();
-		ProcessHandler processHandler = new ZAddressFinderProcessHandler(" " + commandProperties.getProperty("z.list.addresses"));
+		ProcessHandler processHandler = new ZAddressFinderProcessHandler(" " + properties.getProperty("z.list.addresses"));
 		List<String> zAddresses = (List<String>)processHandler.executeProcess();
 		for(String address : zAddresses)
 		{
-			ProcessHandler zAddressBalanceProcessHandler = new ReturnSingleOutputProcessHandler(" " + commandProperties.getProperty("z.get.balance") + " " + address);
+			ProcessHandler zAddressBalanceProcessHandler = new ReturnSingleOutputProcessHandler(" " + properties.getProperty("z.get.balance") + " " + address);
 			zAddressList.add(new Address(address, (String)zAddressBalanceProcessHandler.executeProcess()));
 		}
 		return zAddressList;
@@ -91,7 +86,7 @@ public class ProcessHandlerWrapper {
 	 */
 	public String getTPrivateKey(String publicKey)
 	{
-		ProcessHandler processHandler = new ReturnSingleOutputProcessHandler(" " + commandProperties.getProperty("dump.priv.key") + " \"" + publicKey + "\""); 
+		ProcessHandler processHandler = new ReturnSingleOutputProcessHandler(" " + properties.getProperty("dump.priv.key") + " \"" + publicKey + "\""); 
 		return (String) processHandler.executeProcess();
 	}
 	
@@ -100,7 +95,7 @@ public class ProcessHandlerWrapper {
 	 */
 	public String getZPrivateKey(String publicKey)
 	{
-		ProcessHandler processHandler = new ReturnSingleOutputProcessHandler(" " + commandProperties.getProperty("z.export.key") + " \"" + publicKey + "\"");
+		ProcessHandler processHandler = new ReturnSingleOutputProcessHandler(" " + properties.getProperty("z.export.key") + " \"" + publicKey + "\"");
 		return (String) processHandler.executeProcess();
 	}
 	
@@ -109,7 +104,7 @@ public class ProcessHandlerWrapper {
 	 */
 	public void importTPrivateKey(String privateKey, String rescan)
 	{
-		ProcessHandler processHandler = new ReturnNothingProcessHandler(" " + commandProperties.getProperty("import.priv.key") + " \"" + privateKey + "\" \"\" " + rescan); 
+		ProcessHandler processHandler = new ReturnNothingProcessHandler(" " + properties.getProperty("import.priv.key") + " \"" + privateKey + "\" \"\" " + rescan); 
 		processHandler.executeProcess();
 	}
 	
@@ -118,7 +113,7 @@ public class ProcessHandlerWrapper {
 	 */
 	public void importZPrivateKey(String privateKey, String rescan)
 	{
-		ProcessHandler processHandler = new ReturnNothingProcessHandler(" " + commandProperties.getProperty("z.import.key") + " \"" + privateKey + "\" " + rescan);
+		ProcessHandler processHandler = new ReturnNothingProcessHandler(" " + properties.getProperty("z.import.key") + " \"" + privateKey + "\" " + rescan);
 		processHandler.executeProcess();
 	}
 	
@@ -127,7 +122,7 @@ public class ProcessHandlerWrapper {
 	 */
 	public String newTAddress()
 	{
-		ProcessHandler processHandler = new ReturnSingleOutputProcessHandler(" " + commandProperties.getProperty("get.new.address"));
+		ProcessHandler processHandler = new ReturnSingleOutputProcessHandler(" " + properties.getProperty("get.new.address"));
 		return (String)processHandler.executeProcess();
 	}
 	
@@ -136,54 +131,18 @@ public class ProcessHandlerWrapper {
 	 */
 	public String newZAddress()
 	{
-		ProcessHandler processHandler = new ReturnSingleOutputProcessHandler(" " + commandProperties.getProperty("z.get.new.address"));
+		ProcessHandler processHandler = new ReturnSingleOutputProcessHandler(" " + properties.getProperty("z.get.new.address"));
 		return (String)processHandler.executeProcess();
 	}
 	
-	/*
-	 * It calls a RESTful API to get the amount of blocks of a full synchronized node. 
-	 */
-	private String getTotalBlockCount()
-	{
-		String totalBlocks = null;
-		try 
-		{
-			String uri = properties.getProperty("blockchain.explorer.blockcount.api");
-			URL url = new URL(uri);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			Scanner scanner = new Scanner(connection.getInputStream());
-			if(scanner.hasNext())
-				totalBlocks = scanner.nextLine();
-			scanner.close();
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		return totalBlocks;
-	}
 	
 	/*
 	 * Returns the percentage of synchronization of the local node.
 	 */
 	public String getBlockchainPercentage()
 	{
-		String totalBlocks = getTotalBlockCount();
-		
-		ProcessHandler processHandler = new ReturnSingleOutputProcessHandler(" " + commandProperties.getProperty("get.block.count"));
-		String totalDownloadedBlocks = (String)processHandler.executeProcess();
-		
-		if(totalBlocks != null && totalDownloadedBlocks != null && !totalBlocks.equals("") && !totalDownloadedBlocks.equals(""))
-		{
-			Double percentage = (Double.valueOf(totalDownloadedBlocks) / Double.valueOf(totalBlocks)) * 100.0;
-			//System.out.println(percentage);
-			String stringPercentage = String.valueOf(percentage);
-			if(stringPercentage.length() >= 5)
-				return stringPercentage.substring(0, 5);
-			return stringPercentage;
-		}
-		return "";
+		ProcessHandler processHandler = new ReturnValueOfInteresProcessHandler(" " + properties.getProperty("get.blockchain.info"), "verificationprogress");
+		return (String)processHandler.executeProcess();
 	}
 	
 	
@@ -192,7 +151,7 @@ public class ProcessHandlerWrapper {
 	 */
 	public void sendMoney(String addressFrom, String addressTo, String amount)
 	{
-		ProcessHandler processHandler = new ReturnNothingProcessHandler(" " + commandProperties.getProperty("send.many") + " \"" + addressFrom + "\" \"[{\\\"address\\\":\\\"" + addressTo + "\\\", \\\"amount\\\":" + amount + "}]\"");
+		ProcessHandler processHandler = new ReturnNothingProcessHandler(" " + properties.getProperty("send.many") + " \"" + addressFrom + "\" \"[{\\\"address\\\":\\\"" + addressTo + "\\\", \\\"amount\\\":" + amount + "}]\"");
 		processHandler.executeProcess();
 	}
 }

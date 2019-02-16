@@ -6,12 +6,13 @@
 
 package com.donlaiq.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Service;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,10 +31,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -41,6 +46,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -55,29 +61,26 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.donlaiq.command.NodeStarter;
 import com.donlaiq.command.ProcessHandlerWrapper;
-import com.donlaiq.command.service.ImportService;
-import com.donlaiq.command.service.ImportTask;
 import com.donlaiq.command.service.LastTransactionService;
+import com.donlaiq.command.service.NodeTask;
 import com.donlaiq.controller.model.Address;
 import com.donlaiq.controller.model.Transaction;
-import com.donlaiq.main.SplashScreen;
 
 public class WalletController {
 	
-	private NodeStarter nodeStarter;
+	private NodeTask nodeTask;
+	//private NodeStarter nodeStarter;
 	private ProcessHandlerWrapper processHandlerWrapper;
 	private ObservableList<Address> tAddressList, zAddressList;
 	private ObservableList<Transaction> transactionList;
@@ -95,6 +98,9 @@ public class WalletController {
 	private boolean isTwoKindOfAddresses;
 	
 	private Properties stringProperties, walletProperties;
+	
+	private Lighting lighting;
+	//private Glow glow;
 	
 	@FXML
 	private TextField destinationAddress, amountToSend;
@@ -143,20 +149,33 @@ public class WalletController {
 	private AnchorPane leftAnchorPane;
 	
 	
-	public WalletController(NodeStarter nodeSarter, Stage stage)
+	public WalletController(NodeTask nodeTask, Stage stage)
 	{
-		this.nodeStarter = nodeSarter;
+		this.nodeTask = nodeTask;
 		this.stage = stage;
 		this.processHandlerWrapper = new ProcessHandlerWrapper();
+		
+		Light.Distant light = new Light.Distant();
+		light.setAzimuth(-90.0);
+		light.setColor(new Color(0.95, 0.95, 0.95, 1));
+		
+		lighting = new Lighting();
+		lighting.setLight(light);
+		lighting.setSurfaceScale(2.0);
+		
+		/*glow = new Glow();
+		glow.setLevel(0.6);*/
 		
 		try
 		{
 			walletProperties = new Properties();
-			walletProperties.load(WalletController.class.getClassLoader().getResourceAsStream("resources/wallet.properties"));
+			BufferedReader in = new BufferedReader(new InputStreamReader(WalletController.class.getClassLoader().getResourceAsStream("resources/setup.properties"), "UTF-8"));
+			//walletProperties.load(WalletController.class.getClassLoader().getResourceAsStream("resources/setup.properties"));
+			walletProperties.load(in);
 			
 			stringProperties = new Properties();
-			BufferedReader in = new BufferedReader(new InputStreamReader(WalletController.class.getClassLoader().getResourceAsStream("resources/english.properties"), walletProperties.getProperty("encode")));
-			stringProperties.load(in);
+			BufferedReader in2 = new BufferedReader(new InputStreamReader(WalletController.class.getClassLoader().getResourceAsStream("resources/english.properties"), walletProperties.getProperty("encode")));
+			stringProperties.load(in2);
 			
 			isTwoKindOfAddresses = Boolean.valueOf(walletProperties.getProperty("two.kind.of.addresses"));
 		}
@@ -172,12 +191,15 @@ public class WalletController {
 		try
 		{
 			background.setImage(new Image(WalletController.class.getClassLoader().getResourceAsStream("resources/background.png")));
-			mainLogo.setImage(new Image(WalletController.class.getClassLoader().getResourceAsStream("resources/mainLogo.png")));
+			mainLogo.setImage(new Image(WalletController.class.getClassLoader().getResourceAsStream("resources/cryptoFXWallet.png")));
 			arrow.setImage(new Image(WalletController.class.getClassLoader().getResourceAsStream("resources/arrow.png")));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		sendButton.setEffect(lighting); 
+		donateButton.setEffect(lighting);
 		
 		loadWidgetsStrings();
 		
@@ -261,6 +283,20 @@ public class WalletController {
 
 		arrow.setFitHeight(40);
 		
+		// Wait a few miliseconds to get a shining arrow just before to touch the Send button. 
+		Timer glowingTimer = new Timer();
+		glowingTimer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				arrow.setEffect(startGlowing(1, 0.9));
+			}
+			
+		}, 1000l);
+		
+		
+		mainLogo.setEffect(startGlowing(5, 0.6));
+		
 		ToggleGroup languageGroup = new ToggleGroup();
 		
 		RadioMenuItem englishItem = new RadioMenuItem();
@@ -320,7 +356,7 @@ public class WalletController {
 			try
 			{
 				// destroy the process running the node
-				nodeStarter.releaseResources();
+				nodeTask.releaseResources();
 	        		
 				timer.cancel();
 				
@@ -357,6 +393,7 @@ public class WalletController {
 		
 		if(!isTwoKindOfAddresses)
 			newZMenu.setVisible(false);
+		
 	}
 	
 	
@@ -421,20 +458,25 @@ public class WalletController {
 				transactionList = FXCollections.observableList(lastTransactionService.getValue());				
 				tableView.setItems(transactionList);
 				
-				String percentage = processHandlerWrapper.getBlockchainPercentage();
+				String percentage = String.valueOf(Double.valueOf(processHandlerWrapper.getBlockchainPercentage()) * 100);
+				if(percentage.length() > 5)
+					percentage = percentage.substring(0, 5);
+				
 				if(!percentage.equals(""))
 				{
-					if(Double.valueOf(percentage) < 100.0)
+					if(Double.valueOf(percentage) < 99.99)
 					{
 						percentageLabel.setText(String.valueOf(percentage) + "%");
 						progressLabel.setText(stringProperties.getProperty("synchronizing.node"));
 						mainLogo.setVisible(false);
+						importMenu.setDisable(true);
 					}
 					else
 					{
 						progressLabel.setText(stringProperties.getProperty("synchronized.node"));
 						percentageLabel.setVisible(false);
 						mainLogo.setVisible(true);
+						importMenu.setDisable(false);
 					}
 				}
 				
@@ -517,7 +559,7 @@ public class WalletController {
 			popup.initOwner(stage);
 			
 			FXMLLoader fxmlLoader = null;
-	    	fxmlLoader = new FXMLLoader(getClass().getResource("messageWithCancelPopup.fxml"));
+	    	fxmlLoader = new FXMLLoader(getClass().getResource("/resources/fxml/messageWithCancelPopup.fxml"));
 	    	if(((MenuItem)event.getSource()).getText().contains("Z"))
 	    		isT = false;
 	    	
@@ -525,7 +567,7 @@ public class WalletController {
 	    	
 	    	fxmlLoader.setController(addressController);
 			Pane mainPane = (Pane)fxmlLoader.load();
-			mainPane.getStylesheets().add(WalletController.class.getClassLoader().getResource("resources/messagePopupStyle.css").toExternalForm());
+			mainPane.getStylesheets().add(WalletController.class.getClassLoader().getResource("resources/setup.css").toExternalForm());
 			
 			Scene scene = new Scene(mainPane);
 			popup.setTitle(stringProperties.getProperty("popup.new.t.address.title"));
@@ -611,23 +653,93 @@ public class WalletController {
 	@FXML
 	protected void importAddresses(ActionEvent event)
 	{
-		//boolean exit = false;
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle(stringProperties.getProperty("import.address.file.chooser.title").replace("${coin.code}", walletProperties.getProperty("coin.code")));
         File file = fileChooser.showOpenDialog(stage);
         if(file != null)
         {
+        	importMenu.setDisable(true);
         	isImportingAddresses = true;
         	
-        	// initialize a service to load the addresses read from the file,
-			// but it doesn't block the GUI. It will return the results in the future, when they are ready.
-        	ImportService importService = new ImportService(file);
-        	importService.setOnSucceeded(e -> isImportingAddresses = false);
-        	importService.start();
+        	try
+        	{
+        	
+	        	List<String> lines = new ArrayList<String>();
+	            FileInputStream fileReader = new FileInputStream(file);
+	    		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileReader, "UTF-8"));
+	    		String line = bufferedReader.readLine();
+	    		while(line != null)
+	    		{
+	    			lines.add(line);
+	    			line = bufferedReader.readLine();	
+	    		}
+	    		
+	    		bufferedReader.close();
+	        	
+	        	for(int i = 0; i < lines.size(); i++)
+	    		{
+	    			if(lines.get(i).contains("-"))
+	    			{
+	    				
+	    				// if the user is trying to import an address from a node just with transparent addresses, 
+	    				// then the file should follow the format *-<private_key> for every line.
+	    				// After the last address to import, it does a rescan to look for the last 100 transactions
+	    				// associated the addresses of the wallet.
+	    				
+	    				if(lines.get(i).startsWith("z"))
+	    					processHandlerWrapper.importZPrivateKey(lines.get(i).split("-")[1].trim(), "false");
+	    				else
+	    					processHandlerWrapper.importTPrivateKey(lines.get(i).split("-")[1].trim(), "false");
+	    				
+	    				
+	    				
+    				
+	    				// Stop the current node, wait 10 seconds to release completely the RAM memory and 
+	    				// then start the node again doing a rescan to look for the balance of the imported addresses
+	    				if(i == lines.size() - 1)
+	    				{
+	    					progressLabel.setText("Rescaning addresses...");
+	    					
+	    					nodeTask.releaseResources();
 
-        			
-        	MessagePopup mp = new MessagePopup(stage, stringProperties.getProperty("popup.wait.message.title"), stringProperties.getProperty("popup.wait.message.first.line"), stringProperties.getProperty("popup.wait.message.second.line"));
-    		mp.display();
+	    					// this is a brittle way to restart the node.
+	    					// TODO: find a better way to restart the node once the killed process is completely out of the memory.
+	    					try
+	    					{
+	    						Thread.sleep(10000);
+	    					}
+	    					catch(Exception ex)
+	    					{
+	    						ex.printStackTrace();
+	    					}
+	    					
+	    					
+	    					nodeTask = new NodeTask();
+	    					nodeTask.startNode(true);
+	    					ExecutorService executorService = Executors.newFixedThreadPool(1);
+	    			    	executorService.execute(nodeTask);
+	    			    	
+	    			    	nodeTask.setOnSucceeded(e -> {
+	    			    		updateFromBlockchain();
+	    			    		isImportingAddresses = false;
+	    			    		importMenu.setDisable(false);
+	    			    	});
+	    					
+	    				}
+	    			}
+	    			else
+	    			{
+	    				bufferedReader.close();
+	    				throw new Exception();
+	    			}
+	    			
+	    		}
+	        	
+        	}
+        	catch(Exception e)
+        	{
+        		e.printStackTrace();
+        	}
         }
 	}
 	
@@ -662,9 +774,9 @@ public class WalletController {
 				popup.initOwner(stage);
 				
 				FXMLLoader fxmlLoader = null;
-		    	fxmlLoader = new FXMLLoader(getClass().getResource("messageWithCancelPopup.fxml"));
+		    	fxmlLoader = new FXMLLoader(getClass().getResource("/resources/fxml/messageWithCancelPopup.fxml"));
 		
-		    	SendMoneyController addressController = new SendMoneyController(popup, stringProperties, addressTable.getItems().get(addressTable.getSelectionModel().getSelectedIndex()).getAddressString(), destinationAddress.getText(), amountToSend.getText());
+		    	SendMoneyController addressController = new SendMoneyController(popup, addressTable.getItems().get(addressTable.getSelectionModel().getSelectedIndex()).getAddressString(), destinationAddress.getText(), amountToSend.getText());
 		    	
 		    	addressTable.getSelectionModel().clearSelection();
 		    	destinationAddress.clear();
@@ -673,7 +785,7 @@ public class WalletController {
 		    	
 		    	fxmlLoader.setController(addressController);
 				Pane mainPane = (Pane)fxmlLoader.load();
-				mainPane.getStylesheets().add(WalletController.class.getClassLoader().getResource("resources/messagePopupStyle.css").toExternalForm());
+				mainPane.getStylesheets().add(WalletController.class.getClassLoader().getResource("resources/setup.css").toExternalForm());
 				
 				Scene scene = new Scene(mainPane);
 				popup.setTitle(stringProperties.getProperty("popup.send.money.title"));
@@ -686,6 +798,14 @@ public class WalletController {
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	
+	@FXML
+	private void hideDonation(KeyEvent event)
+	{
+		arrow.setVisible(false);
+		donateLabel.setVisible(false);
 	}
 	
 	/*
@@ -739,8 +859,29 @@ public class WalletController {
 	@FXML
 	private void exit(ActionEvent event)
 	{
-		nodeStarter.releaseResources();
+		nodeTask.releaseResources();
 		timer.cancel();
 		Platform.exit();
 	}
+	
+	
+	/*
+	 * Method to customize the glow of the element and the frame of time to reach both ends.
+	 */
+	private Glow startGlowing(int frameOfTime, double maxGlow)
+	{
+		Glow glow = new Glow();
+		glow.setLevel(maxGlow);
+		
+		KeyValue keyValue = new KeyValue(glow.levelProperty(), 0);
+		KeyFrame keyFrame = new KeyFrame(Duration.seconds(frameOfTime), keyValue);
+		Timeline timeline = new Timeline(keyFrame);
+		timeline.setAutoReverse(true);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.play();
+		
+		return glow;
+	}
+	
+
 }
