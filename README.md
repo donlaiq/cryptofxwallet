@@ -1,5 +1,9 @@
 # Crypto FX Wallet
 
+Video tutorial
+-------------------------
+https://www.youtube.com/watch?v=3amZLwUk7C4
+
 <br/><br/>
 What is Crypto FX Wallet?
 -------------------------
