@@ -4,6 +4,8 @@ Video tutorial
 -------------------------
 https://www.youtube.com/watch?v=3amZLwUk7C4
 
+![alt text](https://cdn1.imggmi.com/uploads/2019/2/22/e28008d682ce046b64060da4a281e105-full.png)
+
 <br/><br/>
 What is Crypto FX Wallet?
 -------------------------
