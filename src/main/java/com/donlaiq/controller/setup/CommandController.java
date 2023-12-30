@@ -56,7 +56,7 @@ public class CommandController extends SetupController{
 			
 			getBlockChainInfo.setText(choseProperties.get("get.blockchain.info"));
 			sendMany.setText(choseProperties.get("send.many"));
-			if(choseProperties.get("two.kind.of.addresses").equals("true"))
+			if("true".equals(choseProperties.get("two.kind.of.addresses")))
 			{
 				if(choseProperties.get("z.list.addresses") != null)
 				{
@@ -92,7 +92,7 @@ public class CommandController extends SetupController{
 			getBlockChainInfo.setText(globalProperties.get("get.blockchain.info"));
 			sendMany.setText(globalProperties.get("send.many"));
 			
-			if(choseProperties.get("two.kind.of.addresses").equals("true"))
+			if("true".equals(choseProperties.get("two.kind.of.addresses")))
 			{
 				zListAddresses.setText(globalProperties.get("z.list.addresses"));
 				zGetBalance.setText(globalProperties.get("z.get.balance"));
@@ -121,7 +121,7 @@ public class CommandController extends SetupController{
 		choseProperties.put("get.blockchain.info", getBlockChainInfo.getText());
 		choseProperties.put("send.many", sendMany.getText());
 
-		if(choseProperties.get("two.kind.of.addresses").equals("true"))
+		if("true".equals(choseProperties.get("two.kind.of.addresses")))
 		{
 			choseProperties.put("z.list.addresses", zListAddresses.getText());
 			choseProperties.put("z.get.balance", zGetBalance.getText());

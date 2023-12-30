@@ -27,11 +27,11 @@ public abstract class CryptoCoin {
 	 */
 	public static CryptoCoin getCryptoCoin(String cryptoName)
 	{
-		if(cryptoName.equals("Qtum"))
+		if("Qtum".equals(cryptoName))
 			cryptoCoin = new Qtum();
-		else if(cryptoName.equals("ZCash"))
+		else if("ZCash".equals(cryptoName))
 			cryptoCoin = new ZCash();
-		else if(cryptoName.equals("Bitcoin Core"))
+		else if("Bitcoin Core".equals(cryptoName))
 			cryptoCoin = new BitcoinCore();
 		else
 			cryptoCoin = new BitcoinZ();

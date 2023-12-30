@@ -77,7 +77,7 @@ public class GeneralController extends SetupController{
 			
 			isTwoKindOfAddresses.getItems().setAll("True", "False");
 			
-			if(choseProperties.get("two.kind.of.addresses").equals("true"))
+			if("true".equals(choseProperties.get("two.kind.of.addresses")))
 				isTwoKindOfAddresses.getSelectionModel().select(0);
 			else
 				isTwoKindOfAddresses.getSelectionModel().select(1);
@@ -123,7 +123,7 @@ public class GeneralController extends SetupController{
 			
 			isTwoKindOfAddresses.getItems().setAll("True", "False");
 			
-			if(globalProperties.get("two.kind.of.addresses").equals("false"))
+			if("false".equals(globalProperties.get("two.kind.of.addresses")))
 				isTwoKindOfAddresses.getSelectionModel().select(1);
 			else
 				isTwoKindOfAddresses.getSelectionModel().select(0);
@@ -220,7 +220,7 @@ public class GeneralController extends SetupController{
 		foreignLanguage.setText(choseProperties.get("foreign.language"));
 		donateAddress.setText(choseProperties.get("donate.address"));
 		
-		if(choseProperties.get("two.kind.of.addresses").equals("false"))
+		if("false".equals(choseProperties.get("two.kind.of.addresses")))
 			isTwoKindOfAddresses.getSelectionModel().select(1);
 		else
 			isTwoKindOfAddresses.getSelectionModel().select(0);

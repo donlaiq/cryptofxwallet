@@ -462,7 +462,7 @@ public class WalletController {
 				if(percentage.length() > 5)
 					percentage = percentage.substring(0, 5);
 				
-				if(!percentage.equals(""))
+				if(!"".equals(percentage))
 				{
 					if(Double.valueOf(percentage) < 99.99)
 					{
