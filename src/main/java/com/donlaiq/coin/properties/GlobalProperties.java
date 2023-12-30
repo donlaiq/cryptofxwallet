@@ -7,6 +7,7 @@
 
 package com.donlaiq.coin.properties;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -34,12 +35,12 @@ public class GlobalProperties {
 		try
 		{
 			reader = new BufferedReader(new FileReader(GlobalProperties.class.getClassLoader().getResource("resources/setup.properties").getPath()));
-			String line = reader.readLine();
+			String line = BoundedLineReader.readLine(reader, 5_000_000);
 			while(line != null)
 			{
 				String[] splitLine = line.split("=");
 		    	setupMap.put(splitLine[0], splitLine[1]);
-		    	line = reader.readLine();
+		    	line = BoundedLineReader.readLine(reader, 5_000_000);
 			}
 			reader.close();		    
 		}

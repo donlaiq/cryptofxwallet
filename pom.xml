@@ -8,7 +8,8 @@
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-  </properties>
+		<versions.java-security-toolkit>1.1.1</versions.java-security-toolkit>
+	</properties>
   
   
   
@@ -72,7 +73,11 @@
 	    <version>2.9.7</version>
 	</dependency -->
 	
-  </dependencies>
+		<dependency>
+			<groupId>io.github.pixee</groupId>
+			<artifactId>java-security-toolkit</artifactId>
+		</dependency>
+	</dependencies>
   
   <!-- build>
   	<finalName>cryptoFXWallet</finalName>
@@ -121,4 +126,13 @@
 		</plugins>
   </build -->
  
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.github.pixee</groupId>
+				<artifactId>java-security-toolkit</artifactId>
+				<version>${versions.java-security-toolkit}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>

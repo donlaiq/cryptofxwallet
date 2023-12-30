@@ -6,6 +6,7 @@
 
 package com.donlaiq.controller;
 
+import io.github.pixee.security.BoundedLineReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -667,11 +668,11 @@ public class WalletController {
 	        	List<String> lines = new ArrayList<String>();
 	            FileInputStream fileReader = new FileInputStream(file);
 	    		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileReader, "UTF-8"));
-	    		String line = bufferedReader.readLine();
+	    		String line = BoundedLineReader.readLine(bufferedReader, 5_000_000);
 	    		while(line != null)
 	    		{
 	    			lines.add(line);
-	    			line = bufferedReader.readLine();	
+	    			line = BoundedLineReader.readLine(bufferedReader, 5_000_000);	
 	    		}
 	    		
 	    		bufferedReader.close();
