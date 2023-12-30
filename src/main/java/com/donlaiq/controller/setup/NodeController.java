@@ -155,7 +155,7 @@ public class NodeController extends SetupController{
 	@Override
 	protected void setPaths()
 	{
-		if(choseProperties.get("two.kind.of.addresses").equals("true"))
+		if("true".equals(choseProperties.get("two.kind.of.addresses")))
 			fxmlPathNext = "/resources/fxml/command_setup_z.fxml";
 		else
 			fxmlPathNext = "/resources/fxml/command_setup_t.fxml";
